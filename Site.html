@@ -1,0 +1,457 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AzureGDPS — Your Geometry Dash World</title>
+<meta name="description" content="AzureGDPS — открой новую сторону Geometry Dash. Присоединяйся к сообществу AzureGDPS!">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;700&display=swap');
+
+:root {
+  --blue: #00d9ff;
+  --purple: #8957ff;
+  --bg: #080b18;
+  --card: #11172a;
+  --text: #f4f7ff;
+  --muted: #a3adc8;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 15% 20%, #123a6944, transparent 45%),
+    radial-gradient(ellipse at 85% 45%, #7024b933, transparent 42%);
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 22px 8%;
+  border-bottom: 1px solid #ffffff12;
+  background: #080b18c9;
+  backdrop-filter: blur(14px);
+}
+
+.logo {
+  font-family: Orbitron, sans-serif;
+  font-size: 19px;
+  font-weight: 900;
+  color: var(--blue);
+  text-decoration: none;
+  text-shadow: 0 0 18px #00d9ff77;
+}
+
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 13px;
+  margin-left: 18px;
+}
+
+nav a:hover { color: var(--blue); }
+
+.hero {
+  min-height: 610px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 85px 20px;
+}
+
+.hero-content { max-width: 850px; }
+
+.tag {
+  display: inline-block;
+  border: 1px solid #00d9ff55;
+  background: #00d9ff0d;
+  color: var(--blue);
+  border-radius: 50px;
+  padding: 9px 16px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+}
+
+h1 {
+  font-family: Orbitron, sans-serif;
+  font-weight: 900;
+  font-size: clamp(38px, 8vw, 82px);
+  line-height: 1.15;
+  margin: 0;
+  background: linear-gradient(100deg, #ffffff, var(--blue), var(--purple));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 25px #00d9ff25);
+}
+
+.hero p {
+  max-width: 660px;
+  margin: 26px auto;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.9;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 32px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 15px 24px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+  transition: .25s;
+  border: 1px solid #ffffff1c;
+}
+
+.btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px #00d9ff25;
+}
+
+.primary {
+  color: #07101b;
+  background: linear-gradient(100deg, var(--blue), #74f4ff);
+  border: none;
+}
+
+.secondary {
+  color: white;
+  background: #ffffff08;
+}
+
+section {
+  padding: 75px 8%;
+  max-width: 1250px;
+  margin: auto;
+}
+
+.section-title {
+  text-align: center;
+  font-family: Orbitron, sans-serif;
+  font-size: clamp(24px, 4vw, 36px);
+  margin: 0 0 14px;
+}
+
+.section-subtitle {
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.8;
+  margin: 0 auto 40px;
+  max-width: 600px;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: linear-gradient(145deg, #151c32, #0d1120);
+  border: 1px solid #ffffff12;
+  border-radius: 18px;
+  padding: 28px;
+  transition: .3s;
+}
+
+.card:hover {
+  border-color: #00d9ff77;
+  transform: translateY(-6px);
+}
+
+.card .number {
+  font-family: Orbitron, sans-serif;
+  font-size: 30px;
+  color: var(--blue);
+}
+
+.card h3 { font-size: 19px; }
+
+.card p {
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.community {
+  text-align: center;
+  background: linear-gradient(135deg, #101a30, #17102b);
+  border: 1px solid #ffffff12;
+  border-radius: 22px;
+  padding: 45px 20px;
+}
+
+.community p {
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.review-box {
+  max-width: 650px;
+  margin: auto;
+  background: var(--card);
+  border: 1px solid #ffffff12;
+  border-radius: 18px;
+  padding: 28px;
+}
+
+label {
+  display: block;
+  margin: 18px 0 8px;
+  font-size: 14px;
+  color: #dce6ff;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 14px;
+  color: white;
+  background: #090d1a;
+  border: 1px solid #ffffff20;
+  border-radius: 9px;
+  outline: none;
+  font: inherit;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--blue);
+}
+
+textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+
+select option { background: #090d1a; }
+
+.review-box button {
+  cursor: pointer;
+  margin-top: 20px;
+  width: 100%;
+  font: inherit;
+}
+
+.note {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+  margin-top: 15px;
+}
+
+footer {
+  text-align: center;
+  padding: 30px 15px;
+  color: var(--muted);
+  border-top: 1px solid #ffffff12;
+  font-size: 13px;
+}
+
+footer strong { color: var(--blue); }
+
+@media (max-width: 760px) {
+  nav { padding: 18px 5%; }
+  nav a { margin-left: 8px; font-size: 12px; }
+  .features { grid-template-columns: 1fr; }
+  section { padding: 55px 6%; }
+  .hero { min-height: 540px; }
+  .hero p { font-size: 15px; }
+  .card { padding: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <a class="logo" href="#home">AzureGDPS</a>
+  <div>
+    <a href="#features">Возможности</a>
+    <a href="#community">Сообщество</a>
+    <a href="#reviews">Отзывы</a>
+  </div>
+</nav>
+
+<header class="hero" id="home">
+  <div class="hero-content">
+    <span class="tag">YOUR NEXT LEVEL STARTS HERE</span>
+    <h1>AzureGDPS</h1>
+
+    <p>
+      Добро пожаловать в AzureGDPS — пространство для поклонников
+      Geometry Dash! Открой новые возможности, найди единомышленников
+      и стань частью сообщества, где каждый клик приближает тебя
+      к следующему достижению.
+    </p>
+
+    <div class="buttons">
+      <a class="btn primary"
+         href="https://t.me/azuregdps3000"
+         target="_blank" rel="noopener noreferrer">
+        ↓ Скачать / перейти в Telegram
+      </a>
+
+      <a class="btn secondary"
+         href="https://www.youtube.com/@AzureDash_S.D"
+         target="_blank" rel="noopener noreferrer">
+        ▶ YouTube AzureDash
+      </a>
+    </div>
+  </div>
+</header>
+
+<section id="features">
+  <h2 class="section-title">Почему AzureGDPS?</h2>
+  <p class="section-subtitle">
+    Три причины заглянуть к нам и открыть для себя новые впечатления.
+  </p>
+
+  <div class="features">
+    <article class="card">
+      <div class="number">01</div>
+      <h3>⚡ Новые впечатления</h3>
+      <p>
+        Исследуй мир Geometry Dash, ищи новые испытания
+        и проверяй свои навыки. Каждый уровень — возможность
+        стать лучше и приблизиться к своей цели.
+      </p>
+    </article>
+
+    <article class="card">
+      <div class="number">02</div>
+      <h3>🌌 Атмосфера GD</h3>
+      <p>
+        Погрузись в ритм, яркие эффекты и атмосферу Geometry Dash.
+        Здесь тебя ждёт стиль, вдохновлённый любимой игрой
+        и её бесконечными возможностями.
+      </p>
+    </article>
+
+    <article class="card">
+      <div class="number">03</div>
+      <h3>💎 Стань частью комьюнити</h3>
+      <p>
+        Подключайся к нашему Telegram-каналу, следи за новостями,
+        делись впечатлениями и знакомься с другими игроками.
+        Твоё мнение тоже важно!
+      </p>
+    </article>
+  </div>
+</section>
+
+<section id="community">
+  <div class="community">
+    <h2 class="section-title">Готов к новому приключению?</h2>
+    <p>
+      Присоединяйся к AzureGDPS, следи за обновлениями
+      и поддерживай развитие проекта вместе с нами!
+    </p>
+    <div class="buttons">
+      <a class="btn primary"
+         href="https://t.me/azuregdps3000"
+         target="_blank" rel="noopener noreferrer">
+        Открыть Telegram
+      </a>
+      <a class="btn secondary"
+         href="https://www.youtube.com/@AzureDash_S.D"
+         target="_blank" rel="noopener noreferrer">
+        Подписаться на YouTube
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="reviews">
+  <h2 class="section-title">Поддержать проект</h2>
+  <p class="section-subtitle">
+    Оставь отзыв, предложи идею или расскажи, что можно улучшить.
+    Твоя обратная связь помогает делать проект лучше.
+  </p>
+
+  <div class="review-box">
+    <!--
+      Чтобы получать отзывы, создай форму на Formspree
+      и замени YOUR_FORM_ID на свой настоящий ID.
+    -->
+    <form action="https://formspree.io/f/YOUR_FORM_ID"
+          method="POST">
+
+      <label for="name">Твоё имя или никнейм</label>
+      <input id="name" name="name" type="text"
+             placeholder="Например, Player123" maxlength="50"
+             required>
+
+      <label for="rating">Твоя оценка проекта</label>
+      <select id="rating" name="rating" required>
+        <option value="" disabled selected>Выбери оценку</option>
+        <option value="5">⭐⭐⭐⭐⭐ — Отлично!</option>
+        <option value="4">⭐⭐⭐⭐ — Хорошо</option>
+        <option value="3">⭐⭐⭐ — Нормально</option>
+        <option value="2">⭐⭐ — Есть что улучшить</option>
+        <option value="1">⭐ — Не понравилось</option>
+      </select>
+
+      <label for="message">Твой отзыв или предложение</label>
+      <textarea id="message" name="message"
+                placeholder="Напиши, что тебе понравилось или что добавить..."
+                maxlength="2000" required></textarea>
+
+      <button class="btn primary" type="submit">
+        Отправить отзыв ↗
+      </button>
+
+      <p class="note">
+        Не указывай пароли и другую личную информацию.
+        Отправляя отзыв, ты передаёшь его владельцу сайта.
+      </p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <p><strong>AzureGDPS</strong> — создано для сообщества Geometry Dash.</p>
+  <p>© 2026 AzureGDPS. Все права на сторонние материалы принадлежат их владельцам.</p>
+  <p>Неофициальный фан-проект, не связанный с RobTop Games.</p>
+</footer>
+
+</body>
+</html>
